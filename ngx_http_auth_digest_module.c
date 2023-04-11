@@ -284,11 +284,19 @@ static ngx_int_t ngx_http_auth_digest_handler(ngx_http_request_t *r) {
   // log only wrong username/password,
   // not expired hash
   // also don't activate evasion tracking unnecessarily
+  //
+  // nonce-count response:
+  // 1 = simple, curl?
+  // 2 = browsers starts/refresh with nc=00000002?
+  // 3 to 'auth_digest_replays' values, bots?
+  // So we randomly try to evade within the 'auth_digest_replays' 
+  // value because browsers sending multiple requests beyond 
+  // replay value will end up in evasion period
   int nc = ngx_hextoi(auth_fields->nc.data, auth_fields->nc.len);
-  if (nc == 1) {
-    ngx_log_error(NGX_LOG_ERR, r->connection->log, 0,
-                  "invalid username or password for %*s",
-                  auth_fields->username.len, auth_fields->username.data);
+  if (nc == 1 || nc == 2 || nc == rand() % alcf->replays + 3) {
+	ngx_log_error(NGX_LOG_ERR, r->connection->log, 0,
+				"invalid username or password for %*s",
+				auth_fields->username.len, auth_fields->username.data);
     ngx_http_auth_digest_evasion_tracking(r, alcf,
         NGX_HTTP_AUTH_DIGEST_STATUS_FAILURE);
   }
