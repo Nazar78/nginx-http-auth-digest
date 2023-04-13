@@ -1,0 +1,5 @@
+a4f7c3caab958b8fe6baf39ed21669e1  usr/lib/nginx/modules/ngx_http_auth_digest_module.so
+ab47f71b6b073bdd7393ef23ab687730  usr/share/doc/libnginx-mod-http-auth-digest/changelog.Debian.gz
+ec313f76c1cd260b35897ff2101afec5  usr/share/doc/libnginx-mod-http-auth-digest/changelog.gz
+541f7983ae8e9a3371b3c7a1ee5fac17  usr/share/doc/libnginx-mod-http-auth-digest/copyright
+a720828fd4d4564284c9670cb6de5ecf  usr/share/nginx/modules-available/mod-http-auth-digest.conf

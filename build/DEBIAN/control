@@ -1,0 +1,13 @@
+Package: libnginx-mod-http-auth-digest
+Source: nginx
+Version: 1.18.0-6.1+deb11u3
+Architecture: amd64
+Maintainer: Debian Nginx Maintainers <pkg-nginx-maintainers@alioth-lists.debian.net>
+Installed-Size: 142
+Depends: nginx-common (= 1.18.0-6.1+deb11u3), libc6 (>= 2.14)
+Recommends: nginx
+Section: httpd
+Priority: optional
+Homepage: https://nginx.net
+Description: Digest authentication module for Nginx
+ The nginx_http_auth_digest module enables digest authentication.
