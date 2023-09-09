@@ -294,9 +294,11 @@ static ngx_int_t ngx_http_auth_digest_handler(ngx_http_request_t *r) {
   // replay value will end up in evasion period
   int nc = ngx_hextoi(auth_fields->nc.data, auth_fields->nc.len);
   if (nc == 1 || nc == 2 || nc == rand() % alcf->replays + 3) {
-	ngx_log_error(NGX_LOG_ERR, r->connection->log, 0,
-				"invalid username or password for %*s",
-				auth_fields->username.len, auth_fields->username.data);
+    if (nc <= 2) {
+      ngx_log_error(NGX_LOG_ERR, r->connection->log, 0,
+                    "invalid username or password for %*s, nc=%d",
+                    auth_fields->username.len, auth_fields->username.data, nc);
+    }
     ngx_http_auth_digest_evasion_tracking(r, alcf,
         NGX_HTTP_AUTH_DIGEST_STATUS_FAILURE);
   }
